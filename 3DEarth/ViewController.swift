@@ -7,19 +7,32 @@
 //
 
 import UIKit
+import SceneKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var sceneKitView: SCNView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        let scene = SCNScene()
+        
+        let cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        scene.rootNode.addChildNode(cameraNode)
+        
+        let stars = SCNParticleSystem(named: "StarsParticle.scnp", inDirectory: nil)!
+        scene.rootNode.addParticleSystem(stars)
+        
+        let sceneView = self.sceneKitView
+        
+        sceneView?.scene = scene
+        sceneView?.showsStatistics = true
+        sceneView?.backgroundColor = UIColor.black
+        sceneView?.allowsCameraControl = true
+        
     }
-
 
 }
 
